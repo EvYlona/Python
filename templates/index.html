@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Post it !</title>
+  </head>
+  <body>
+    {% if username %}
+      <h1>Bienvenue sur Post it {{ username }} ! </h1>
+      <a href="/logout">Se déconnecter</a>
+      <a href="/create_post">Nouveau post !</a>
+      <br><br>
+      <h2>Liste des posts :</h2>
+        <ul>
+          {% for post in posts %}
+              <li>
+                {{ post['title'] }}
+                {{ post['content'] }}
+                
+                </form>
+                <form method="POST" action="{{ url_for('delete_post', post_id=post[0]) }}">
+
+                
+                  <button type="submit">Supprimer</button>
+                </form>
+              </li>
+          {% endfor %}
+        </ul>
+    {% else %}
+      <h1>Bienvenue sur Post it !</h1>
+      <a href="/login">Se connecter</a>
+      <a href="/register">S'inscrire</a>
+    {% endif %}
+  </body>
+</html>

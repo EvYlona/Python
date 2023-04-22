@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Création de Post</title>
+  </head>
+  <body>
+    <h1>Création de Post !</h1>
+    {% if error %}
+      <p>Error: {{ error }}</p>
+    {% endif %}
+    <form action="{{ url_for('create_post') }}" method="post">
+      <input type="hidden" name="user_id" value="{{ session['user_id']}}">
+      <label for="title">Title:</label><br>
+      <input type="text" id="title" name="title"><br>
+      <label for="content">Content:</label><br>
+      <textarea id="content" name="content"></textarea><br>
+      <input type="submit" value="Create">
+    </form>
+  </body>
+</html>

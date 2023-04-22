@@ -1,0 +1,22 @@
+{% block content %}
+    <h2>Inscription</h2>
+    {% if error %}
+        <p class="text-danger">{{ error }}</p>
+    {% endif %}
+    <form method="POST" action="">
+        <div class="form-group">
+            <label>Nom d'utilisateur:</label>
+            <input type="text" name="username" required minlength="4" maxlength="20">
+        </div>
+        <div class="form-group">
+            <label>Mot de passe:</label>
+            <input type="password" name="password" required minlength="6">
+        </div>
+        <div class="form-group">
+            <label>Email:</label>
+            <input type="email" name="email" required>
+        </div>
+        <button type="submit" class="btn btn-primary">S'inscrire</button>
+    </form>
+{% endblock %}
+
