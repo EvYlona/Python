@@ -8,8 +8,8 @@ app.secret_key = 'ClesSecretePostIt'
     
 #Fonction qui récupère la connexion à la base de données créée par "connect_db"
 def get_db():
-    return sqlite3.connect("instance/db.sqlite")
-if not Path ("instance/db.sqlite").exists():
+    return sqlite3.connect("db.sqlite")
+if not Path ("db.sqlite").exists():
     db = get_db()
     sql = Path("db.sqlite").read_text()
     db.executescript(sql)
@@ -24,7 +24,7 @@ def checkSession():
 @app.route('/')
 def index():
     if 'username' in session:
-        conn = sqlite3.connect('instance/db.sqlite')
+        conn = sqlite3.connect('db.sqlite')
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
         user_id = session.get("user_id")
@@ -53,7 +53,7 @@ def register():
         email = request.form['email']
 
         #On vérifie si l'utilisateur a déjà un compte dans la base de données
-        conn = sqlite3.connect('instance/db.sqlite')
+        conn = sqlite3.connect('db.sqlite')
         cursor = conn.cursor()
         cursor.execute('SELECT * FROM user WHERE username = ?', (username,))
         user = cursor.fetchone()
@@ -82,7 +82,7 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        conn = sqlite3.connect('instance/db.sqlite')
+        conn = sqlite3.connect('db.sqlite')
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM user WHERE username = ? AND password = ?", (username, password))
         user = cursor.fetchone()
@@ -119,7 +119,7 @@ def create_post():
         content = request.form['content']
 
         #On récupère l'id de l'utilisateur à partir de la session
-        conn = sqlite3.connect('instance/db.sqlite')
+        conn = sqlite3.connect('db.sqlite')
         cursor = conn.cursor()
         cursor.execute('SELECT id FROM user WHERE username = ?', (session['username'],))
         user_id = cursor.fetchone()[0]
@@ -138,7 +138,7 @@ def create_post():
 @app.route('/delete_post/<int:post_id>', methods=['GET', 'POST'])
 def delete_post(post_id):
 
-    conn = sqlite3.connect('instance/db.sqlite')
+    conn = sqlite3.connect('db.sqlite')
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM post WHERE id = ?', (post_id,))
     post = cursor.fetchone()
